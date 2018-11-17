@@ -96,7 +96,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
             if (fragment != null)
                 transaction.remove(fragment);
         }
-        transaction.commit();
+        transaction.commitNow();
         tags.clear();
 
         return this;
@@ -107,6 +107,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
         return POSITION_NONE;
     }
 
+    @Override
     public Object instantiateItem(ViewGroup container, int position) {
         Object fragment = super.instantiateItem(container, position);
         if (fragment instanceof Fragment)

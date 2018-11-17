@@ -24,6 +24,8 @@
     <string name="error_contributors_load">Loading contributors failed</string>
     <string name="error_gist_load">Loading Gist failed</string>
     <string name="error_notifications_load">Loading notifications failed</string>
+    <string name="error_projects_load">Loading projects failed</string>
+    <string name="error_cards_load">Loading cards failed</string>
     <string name="error_news_load">Loading news failed</string>
     <string name="error_followers_load">Loading followers failed</string>
     <string name="error_people_load">Loading people failed</string>
@@ -60,6 +62,8 @@
     <string name="loading_notifications">Loading Notifications…</string>
     <string name="loading_more_issues">Loading More Issues…</string>
     <string name="loading_issues">Loading Issues…</string>
+    <string name="loading_projects">Loading Projects…</string>
+    <string name="loading_cards">Loading Cards…</string>
     <string name="loading_comments">Loading Comments…</string>
     <string name="loading_repositories">Loading Repositories…</string>
     <string name="loading_issue">Loading Issue…</string>
@@ -68,6 +72,7 @@
     <string name="loading_people">Loading People…</string>
     <string name="loading_gists">Loading Gists…</string>
     <string name="loading_collaborators">Loading Collaborators…</string>
+    <string name="loading_teams">Loading Teams…</string>
     <string name="loading_milestones">Loading Milestones…</string>
     <string name="loading_labels">Loading Labels…</string>
     <string name="loading_commits">Loading Commits…</string>
@@ -90,6 +95,8 @@
     <string name="no_teams">No Teams</string>
     <string name="no_news">No News</string>
     <string name="no_commits">No Commits</string>
+    <string name="no_projects">No Projects</string>
+    <string name="no_cards">No Cards</string>
     <!--  -->
 
 
@@ -114,6 +121,9 @@
     <string name="issue_event_cross_referenced">referenced this issue in %1$s</string>
     <string name="issue_event_review_requested">requested review from %1$s</string>
     <string name="issue_event_review_request_removed">removed their request for review from %1$s</string>
+    <string name="issue_event_reviewed">reviewed</string>
+    <string name="issue_event_review_pending">started a review</string>
+    <string name="issue_event_review_dismissed">dismissed their review</string>
     <string name="issue_event_closed">closed this</string>
     <string name="issue_event_closed_from_commit">closed this from commit %1$s</string>
     <string name="issue_event_reopened">reopened this</string>
@@ -160,6 +170,7 @@
     <string name="dashboard_issues_title">Issue Dashboard</string>
     <string name="bookmarks">Bookmarks</string>
     <string name="report_issue">Report an issue</string>
+    <string name="logout">Sign out</string>
     <string name="gists_title">Gists</string>
     <string name="issue_title">Issue #</string>
     <string name="pull_request_title">Pull Request #</string>
@@ -187,6 +198,7 @@
     <string name="select_milestone">Select Milestone</string>
     <string name="select_labels">Select Labels</string>
     <string name="select_ref">Select Branch or Tag</string>
+    <string name="login_pass_explanation">ForkHub will only use your password to generate a &lt;i>Personal Access Token&lt;/i>. If you prefer you can &lt;a href=\"https://github.com/settings/tokens\">create it yourself&lt;/a> and use it as password here.</string>
     <string name="enter_otp_code_title">Authentication Code</string>
     <string name="enter_otp_code_message">Two-factor authentication is enabled for your account. Enter your authentication code to verify your identity.</string>
     <string name="star_forkhub_dialog_text">If you like this app, please show your appreciation by starring it.</string>
@@ -247,6 +259,7 @@
     <string name="prefix_created">created\u0020</string>
     <string name="prefix_updated">updated\u0020</string>
     <string name="prefix_opened">opened\u0020</string>
+    <string name="updated">Updated %1$s</string>
     <string name="clear">Clear</string>
     <string name="pull_request_commits">Commits: %d</string>
     <string name="pull_request_mergeable_text">This branch has no conflicts with the base branch</string>
@@ -313,6 +326,7 @@
     <string name="tab_code">code</string>
     <string name="tab_commits">commits</string>
     <string name="tab_issues">issues</string>
+    <string name="tab_projects">projects</string>
     <string name="tab_pull_requests">pull requests</string>
     <string name="tab_watched">watched</string>
     <string name="tab_assigned">assigned</string>
@@ -331,5 +345,6 @@
     <string name="render_markdown">Render markdown</string>
     <string name="copy_hash">Copy hash</string>
     <string name="toast_msg_copied">Copied to clipboard</string>
+    <string name="parent_repo">Parent repository</string>
 
 </resources>

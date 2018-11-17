@@ -24,6 +24,8 @@
     <string name="error_contributors_load">Carregamento dos contribuidores falhou</string>
     <string name="error_gist_load">Carregamento do Gist falhou</string>
     <string name="error_notifications_load">Carregamento das notificações falhou</string>
+    <string name="error_projects_load">Carregamento dos projetos falhou</string>
+    <string name="error_cards_load">Carregamento dos cartões falhou</string>
     <string name="error_news_load">Carregamento das notícias falhou</string>
     <string name="error_followers_load">Carregamento dos seguidores falhou</string>
     <string name="error_people_load">Carregamento das pessoas falhou</string>
@@ -60,6 +62,8 @@
     <string name="loading_notifications">Carregando Notificações…</string>
     <string name="loading_more_issues">Carregando Mais Problemas…</string>
     <string name="loading_issues">Carregando Problemas…</string>
+    <string name="loading_projects">Carregando Projetos…</string>
+    <string name="loading_cards">Carregando Cartões…</string>
     <string name="loading_comments">Carregando Comentários…</string>
     <string name="loading_repositories">Carregando Repositórios…</string>
     <string name="loading_issue">Carregando Problema…</string>
@@ -82,7 +86,7 @@
     <string name="no_repositories">Nenhum Repositório</string>
     <string name="no_contributors">Nenhum Contribuidor</string>
     <string name="no_issues">Nenhum Problema</string>
-    <string name="no_pull_requests">Nenhum Pedido de Pull</string>
+    <string name="no_pull_requests">Nenhum Pedido</string>
     <string name="no_gists">Nenhum Gist</string>
     <string name="no_people">Nenhuma Pessoa</string>
     <string name="no_followers">Nenhum Seguidor</string>
@@ -90,6 +94,8 @@
     <string name="no_teams">Nenhuma Equipe</string>
     <string name="no_news">Nenhuma Notícia</string>
     <string name="no_commits">Nenhum Commit</string>
+    <string name="no_projects">Nenhum Projeto</string>
+    <string name="no_cards">Nenhum Cartão</string>
     <!--  -->
 
 
@@ -114,6 +120,9 @@
     <string name="issue_event_cross_referenced">referenciou este problema em %1$s</string>
     <string name="issue_event_review_requested">solicitou revisão de %1$s</string>
     <string name="issue_event_review_request_removed">removeu a solicitação para revisão de %1$s</string>
+    <string name="issue_event_reviewed">revisado</string>
+    <string name="issue_event_review_pending">iniciou uma revisão</string>
+    <string name="issue_event_review_dismissed">rejeitou sua revisão</string>
     <string name="issue_event_closed">fechou isto</string>
     <string name="issue_event_closed_from_commit">fechou isto do commit %1$s</string>
     <string name="issue_event_reopened">reabriu isto</string>
@@ -187,6 +196,7 @@
     <string name="select_milestone">Selecionar Milestone</string>
     <string name="select_labels">Selecionar Rótulos</string>
     <string name="select_ref">Selecionar Branch ou Etiqueta</string>
+    <string name="login_pass_explanation">O ForkHub usará sua senha apenas para gerar um &lt;i>Token de Acesso Pessoal&lt;/i>. Se preferir, pode &lt;a href=\"https://github.com/settings/tokens\">criá-lo você mesmo&lt;/a> e usá-lo como senha aqui.</string>
     <string name="enter_otp_code_title">Código de Autenticação</string>
     <string name="enter_otp_code_message">Autenticação de dois fatores está habilitado para sua conta. Digite o seu código de autenticação para verificar a sua identidade.</string>
     <string name="star_forkhub_dialog_text">Se você gosta deste app, por favor mostre o seu apreço dando estrelas.</string>
@@ -245,6 +255,7 @@
     <string name="prefix_created">criou\u0020</string>
     <string name="prefix_updated">atualizou\u0020</string>
     <string name="prefix_opened">abriu\u0020</string>
+    <string name="updated">Atualizado %1$s</string>
     <string name="clear">Limpar</string>
     <string name="pull_request_commits">Commits: %d</string>
     <string name="pull_request_mergeable_text">Este branch não tem conflitos com o branch base</string>
@@ -311,7 +322,8 @@
     <string name="tab_code">código</string>
     <string name="tab_commits">commits</string>
     <string name="tab_issues">problemas</string>
-    <string name="tab_pull_requests">pedidos de pull</string>
+    <string name="tab_projects">projetos</string>
+    <string name="tab_pull_requests">pedidos</string>
     <string name="tab_watched">assistindo</string>
     <string name="tab_assigned">atribuído</string>
     <string name="tab_created">criado</string>
@@ -324,10 +336,15 @@
     <string name="open_in_browser">Abrir no navegador</string>
     <string name="show_password">Mostrar senha</string>
     <string name="write">Escrever</string>
-    <string name="preview">Previsualizar</string>
+    <string name="preview">Pré-visualizar</string>
     <string name="show_raw_markdown">Mostrar remarcação pura</string>
     <string name="render_markdown">Iterpretar remarcação</string>
     <string name="copy_hash">Copiar hash</string>
     <string name="toast_msg_copied">Copiado para a área de tranferência</string>
+    <string name="loading_teams">Carregando Equipes...</string>
+    <string name="rate_forkhub_dialog_text">Se você gosta deste aplicativo, mostre sua avaliação classificando-o na Play Store.</string>
+    <string name="rate">Taxa</string>
+    <string name="logout">Sair</string>
+    <string name="parent_repo">Repositório principal</string>
 
 </resources>

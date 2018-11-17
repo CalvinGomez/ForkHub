@@ -27,13 +27,17 @@ import com.github.mobile.R;
 import com.github.mobile.api.model.Issue;
 import com.github.mobile.api.model.TimelineEvent;
 import com.github.mobile.api.model.User;
+import com.github.mobile.ui.ReactionsView;
 import com.github.mobile.ui.user.UserViewActivity;
 import com.github.mobile.util.AvatarLoader;
 import com.github.mobile.util.HttpImageGetter;
 import com.github.mobile.util.TimeUtils;
 import com.github.mobile.util.TypefaceUtils;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Adapter for a list of {@link TimelineEvent} objects
@@ -43,6 +47,11 @@ public class EventListAdapter extends MultiTypeAdapter {
     private static final int VIEW_EVENT = 1;
     private static final int VIEW_TOTAL = 2;
 
+    private static final List<String> CLICKABLE_EVENTS = Arrays.asList(
+            TimelineEvent.EVENT_CLOSED,
+            TimelineEvent.EVENT_CROSS_REFERENCED,
+            TimelineEvent.EVENT_MERGED,
+            TimelineEvent.EVENT_REFERENCED);
 
     private final Context context;
 
@@ -97,10 +106,17 @@ public class EventListAdapter extends MultiTypeAdapter {
         String eventString = event.event;
 
         User actor;
-        if (eventString.equals(TimelineEvent.EVENT_ASSIGNED) || eventString.equals(TimelineEvent.EVENT_UNASSIGNED)) {
+        switch (eventString) {
+        case TimelineEvent.EVENT_ASSIGNED:
+        case TimelineEvent.EVENT_UNASSIGNED:
             actor = event.assignee;
-        } else {
+            break;
+        case TimelineEvent.EVENT_REVIEWED:
+            actor = event.user;
+            break;
+        default:
             actor = event.actor;
+            break;
         }
 
         String message = String.format("<b>%s</b> ", actor == null ? "ghost" : actor.login);
@@ -162,6 +178,45 @@ public class EventListAdapter extends MultiTypeAdapter {
             setText(0, TypefaceUtils.ICON_X);
             textView(0).setTextColor(resources.getColor(R.color.issue_event_normal));
             break;
+        case TimelineEvent.EVENT_REVIEWED:
+            switch (event.state) {
+            case TimelineEvent.STATE_PENDING:
+                message += resources.getString(R.string.issue_event_review_pending);
+                setText(0, TypefaceUtils.ICON_EYE);
+                textView(0).setTextColor(resources.getColor(R.color.issue_event_normal));
+                break;
+            case TimelineEvent.STATE_COMMENTED:
+                message += resources.getString(R.string.issue_event_reviewed);
+                setText(0, TypefaceUtils.ICON_EYE);
+                textView(0).setTextColor(resources.getColor(R.color.issue_event_normal));
+                break;
+            case TimelineEvent.STATE_CHANGES_REQUESTED:
+                message += resources.getString(R.string.issue_event_reviewed);
+                setText(0, TypefaceUtils.ICON_X);
+                textView(0).setTextColor(resources.getColor(R.color.issue_event_red));
+                break;
+            case TimelineEvent.STATE_APPROVED:
+                message += resources.getString(R.string.issue_event_reviewed);
+                setText(0, TypefaceUtils.ICON_CHECK);
+                textView(0).setTextColor(resources.getColor(R.color.issue_event_green));
+                break;
+            case TimelineEvent.STATE_DISMISSED:
+                message += resources.getString(R.string.issue_event_reviewed);
+                setText(0, TypefaceUtils.ICON_EYE);
+                textView(0).setTextColor(resources.getColor(R.color.issue_event_normal));
+                break;
+            default:
+                message += resources.getString(R.string.issue_event_reviewed);
+                setText(0, TypefaceUtils.ICON_EYE);
+                textView(0).setTextColor(resources.getColor(R.color.issue_event_normal));
+                break;
+            }
+            break;
+        case TimelineEvent.EVENT_REVIEW_DISMISSED:
+            message += resources.getString(R.string.issue_event_review_dismissed);
+            setText(0, TypefaceUtils.ICON_X);
+            textView(0).setTextColor(resources.getColor(R.color.issue_event_normal));
+            break;
         case TimelineEvent.EVENT_MILESTONED:
             message += String.format(resources.getString(R.string.issue_event_milestone_added), "<b>" + event.milestone.title + "</b>");
             setText(0, TypefaceUtils.ICON_MILESTONE);
@@ -204,6 +259,7 @@ public class EventListAdapter extends MultiTypeAdapter {
             setText(0, TypefaceUtils.ICON_GIT_COMMIT);
             textView(0).setTextColor(resources.getColor(R.color.issue_event_normal));
             break;
+        case TimelineEvent.EVENT_COMMIT_COMMENTED:
         case TimelineEvent.EVENT_LINE_COMMENTED:
             message += resources.getString(R.string.issue_event_comment_diff);
             setText(0, TypefaceUtils.ICON_CODE);
@@ -231,8 +287,18 @@ public class EventListAdapter extends MultiTypeAdapter {
             break;
         }
 
-        if (event.created_at != null) {
-            message += " " + TimeUtils.getRelativeTime(event.created_at);
+        Date date;
+        switch (eventString) {
+        case TimelineEvent.EVENT_REVIEWED:
+            date = event.submitted_at;
+            break;
+        default:
+            date = event.created_at;
+            break;
+        }
+
+        if (date != null) {
+            message += " " + TimeUtils.getRelativeTime(date);
         }
         setText(1, Html.fromHtml(message));
     }
@@ -261,7 +327,7 @@ public class EventListAdapter extends MultiTypeAdapter {
             view(5).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    issueFragment.editComment(comment.getOldCommentModel());
+                    issueFragment.editComment(comment.getOldModel());
                 }
             });
             // Delete button
@@ -269,13 +335,14 @@ public class EventListAdapter extends MultiTypeAdapter {
             view(6).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    issueFragment.deleteComment(comment.getOldCommentModel());
+                    issueFragment.deleteComment(comment.getOldModel());
                 }
             });
         } else {
             setGone(5, true);
             setGone(6, true);
         }
+        ((ReactionsView)view(7)).setReactionSummary(comment.reactions);
     }
 
     public MultiTypeAdapter setItems(Collection<TimelineEvent> items) {
@@ -335,7 +402,13 @@ public class EventListAdapter extends MultiTypeAdapter {
 
     @Override
     public boolean isEnabled(int position) {
-        return false;
+        TimelineEvent event = (TimelineEvent) getItem(position);
+
+        if (TimelineEvent.EVENT_CLOSED.equals(event.event)) {
+            return event.commit_id != null;
+        }
+
+        return CLICKABLE_EVENTS.contains(event.event);
     }
 
     @Override
@@ -343,7 +416,7 @@ public class EventListAdapter extends MultiTypeAdapter {
         if(type == VIEW_COMMENT)
             return new int[] { R.id.tv_comment_body, R.id.tv_comment_author,
                     R.id.tv_comment_date, R.id.tv_comment_edited, R.id.iv_avatar,
-                    R.id.iv_comment_edit, R.id.iv_comment_delete };
+                    R.id.iv_comment_edit, R.id.iv_comment_delete, R.id.rv_comment_reaction };
         else
             return new int[]{R.id.tv_event_icon, R.id.tv_event, R.id.iv_avatar};
     }

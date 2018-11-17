@@ -17,9 +17,10 @@ package com.github.mobile.api.model;
 
 import com.squareup.moshi.Json;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable {
     public static final String TYPE_USER = "User";
     public static final String TYPE_ORGANIZATION = "Organization";
 
@@ -71,9 +72,34 @@ public class User {
 
     public int collaborators;
 
-    public Plan plan;
+    public User() {
+    }
 
-    public org.eclipse.egit.github.core.User getOldUserModel() {
+    public User(org.eclipse.egit.github.core.User user) {
+        this.id = user.getId();
+        this.login = user.getLogin();
+        this.avatar_url = user.getAvatarUrl();
+        this.type = user.getType();
+        this.name = user.getName();
+        this.company = user.getCompany();
+        this.blog = user.getBlog();
+        this.location = user.getLocation();
+        this.email = user.getEmail();
+        this.is_hireable = user.isHireable();
+        this.bio = user.getBio();
+        this.public_repos = user.getPublicRepos();
+        this.public_gists = user.getPublicGists();
+        this.followers = user.getFollowers();
+        this.following = user.getFollowing();
+        this.created_at = user.getCreatedAt();
+        this.total_private_repos = user.getTotalPrivateRepos();
+        this.owned_private_repos = user.getOwnedPrivateRepos();
+        this.private_gists = user.getPrivateGists();
+        this.disk_usage = user.getDiskUsage();
+        this.collaborators = user.getCollaborators();
+    }
+
+    public org.eclipse.egit.github.core.User getOldModel() {
         org.eclipse.egit.github.core.User user = new org.eclipse.egit.github.core.User();
         user.setId((int) id);
         user.setLogin(login);

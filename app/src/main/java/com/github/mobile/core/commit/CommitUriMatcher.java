@@ -38,12 +38,20 @@ public class CommitUriMatcher {
      * @return {@link Intent} or null if path is not valid
      */
     public static Intent getCommitIntent(List<String> pathSegments) {
-        if (pathSegments.size() != 4)
+        if (pathSegments.size() != 4 && pathSegments.size() != 6)
             return null;
 
         Repository repo = RepositoryUriMatcher.getRepository(pathSegments);
         if (repo == null)
             return null;
+
+        if (pathSegments.size() == 6) {
+            if ("pull".equals(pathSegments.get(2)) && "commits".equals(pathSegments.get(4))) {
+                return getSingleCommitIntent(repo, pathSegments);
+            } else {
+                return null;
+            }
+        }
 
         switch (pathSegments.get(2)) {
         case "commit":
@@ -56,7 +64,8 @@ public class CommitUriMatcher {
     }
 
     private static Intent getSingleCommitIntent(Repository repo, List<String> pathSegments) {
-        String ref = pathSegments.get(3);
+        String ref = pathSegments.get(pathSegments.size() - 1);
+
         if (TextUtils.isEmpty(ref))
             return null;
 
